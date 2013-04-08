@@ -1,0 +1,2 @@
+recursive-include paypalpy *
+recursive-exclude paypalpy *.py[co]
