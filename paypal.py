@@ -297,11 +297,11 @@ METHODS = {
 
         # Payer name fields
         # ES: No info in spec on whether these are optional
-        Param('salutation', maxLen=20),
+        Param('salutation', maxLen=20, optional=True),
         Param('firstname', maxLen=25),
-        Param('middlename', maxLen=25),
+        Param('middlename', maxLen=25, optional=True),
         Param('lastname', maxLen=25),
-        Param('suffix', maxLen=12),
+        Param('suffix', maxLen=12, optional=True),
 
         # Address fields
         Param('street', maxLen=100),
@@ -310,7 +310,7 @@ METHODS = {
         Param('state', maxLen=40),
         Param('countrycode', maxLen=2),
         Param('zip', maxLen=20),
-        Param('phonenum', maxLen=20),
+        Param('phonenum', maxLen=20, optional=True),
 
         # Payment details type fields
         ParamAmt(),
@@ -342,12 +342,12 @@ METHODS = {
 
         # Ship to address fields
         Param('shiptoname', maxLen=32, optional=True),
-        Param('shiptostreet', maxLen=100),
+        Param('shiptostreet', maxLen=100, optional=True),
         Param('shiptostreet2', maxLen=100, optional=True),
-        Param('shiptocity', maxLen=40),
-        Param('shiptostate', maxLen=40),
-        Param('shiptozip', maxLen=20),
-        Param('shiptocountrycode', maxLen=2),
+        Param('shiptocity', maxLen=40, optional=True),
+        Param('shiptostate', maxLen=40, optional=True),
+        Param('shiptozip', maxLen=20, optional=True),
+        Param('shiptocountrycode', maxLen=2, optional=True),
         Param('shiptophonenum', maxLen=20, optional=True)
         ),
 
