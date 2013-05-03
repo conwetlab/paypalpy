@@ -390,8 +390,9 @@ METHODS = {
     
     'SetExpressCheckout': (
         Param('token', maxLen=20, optional=True),
-        ParamAmt(),
-        ParamCurrencyCode(optional=True),
+        ParamAmt('paymentrequest_0_amt'),
+        Param('paymentrequest_0_currencycode', optional=True),
+        Param('paymentrequest_0_paymentaction', optional=True),
         ParamAmt('maxamt', optional=True),
         Param('desc', maxLen=127, optional=True),
         Param('custom', 256, optional=True),
@@ -424,19 +425,19 @@ METHODS = {
         #ParamList('paymenttype', allowedValues=('Any', 'Instantonly')),
         
         # Address fields
-        Param('name', maxLen=32),
-        Param('shiptostreet', maxLen=100),
+        Param('name', maxLen=32, optional=True),
+        Param('shiptostreet', maxLen=100, optional=True),
         Param('shiptostreet2', maxLen=100, optional=True),
-        Param('shiptocity', maxLen=40),
-        Param('shiptostate', maxLen=40),
-        Param('shiptozip', maxLen=20),
-        Param('shiptocountry', maxLen=2),
+        Param('shiptocity', maxLen=40, optional=True),
+        Param('shiptostate', maxLen=40, optional=True),
+        Param('shiptozip', maxLen=20, optional=True),
+        Param('shiptocountry', maxLen=2, optional=True),
         Param('phonenum', maxLen=20, optional=True),
         
         # Payment details type fields
-        ParamAmt(),
+        #ParamAmt(),
         ParamCurrencyCode(optional=True),
-        ParamAmt('itemamt'),
+        ParamAmt('itemamt', True),
         ParamAmt('shippingamt', True),
         ParamAmt('insuranceamt', True),
         ParamAmt('shippingdiscount', True),
@@ -464,7 +465,7 @@ METHODS = {
         # Billing agreement details fields
         ParamList('billingtype',
                   allowedValues=('MerchantInitiatedBilling',
-                                 'RecurringPayments')),
+                                 'RecurringPayments'), optional=True),
         ParamList('billingagreementdescription', maxLen=127, optional=True),
         ParamList('paymenttype', allowedValues=('Any', 'InstantOnly'),
                   optional=True),
@@ -477,15 +478,15 @@ METHODS = {
 
     'DoExpressCheckoutPayment': (
         Param('token', maxLen=20),
-        Param('paymentaction', allowedValues=('Authorization',
+        Param('paymentrequest_0_paymentaction', allowedValues=('Authorization',
                                               'Order',
                                               'Sale')),
         Param('payerid', maxLen=13, allowedChars=ALPHANUM),
         Param('returnfmfdetails', paramType=bool, optional=True),
 
         # Payment details type fields
-        ParamAmt(),
-        ParamCurrencyCode(),
+        ParamAmt('paymentrequest_0_amt'),
+        ParamCurrencyCode('paymentrequest_0_currencycode'),
         ParamAmt('itemamt', True),
         ParamAmt('shippingamt', True),
         ParamAmt('insuranceamt', True),
@@ -512,13 +513,13 @@ METHODS = {
         ParamList('ebayitemorderid', maxLen=64, optional=True),
         
         # Ship to address fields
-        Param('name', maxLen=32),
-        Param('shiptostreet', maxLen=100),
+        Param('name', maxLen=32, optional=True),
+        Param('shiptostreet', maxLen=100, optional=True),
         Param('shiptostreet2', maxLen=100, optional=True),
-        Param('shiptocity', maxLen=40),
-        Param('shiptostate', maxLen=40),
-        Param('shiptozip', maxLen=20),
-        Param('shiptocountry', maxLen=2),
+        Param('shiptocity', maxLen=40, optional=True),
+        Param('shiptostate', maxLen=40, optional=True),
+        Param('shiptozip', maxLen=20, optional=True),
+        Param('shiptocountry', maxLen=2, optional=True),
         Param('phonenum', maxLen=20, optional=True)
         ),
 
@@ -893,7 +894,7 @@ class PayPal(object):
         params['method'] = methodName
         params['user'] = self.userName
         params['pwd'] = self.password
-        params['version'] = '3.2'
+        params['version'] = '63.0'
         if self.signature:
             params['signature'] = self.signature
         else:
